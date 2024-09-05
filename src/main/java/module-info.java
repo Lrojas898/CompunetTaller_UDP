@@ -9,4 +9,7 @@ module com.example.compunettaller_udp {
 
     opens com.example.compunettaller_udp to javafx.fxml;
     exports com.example.compunettaller_udp;
+    exports com.example.compunettaller_udp.controllers;
+    opens com.example.compunettaller_udp.controllers to javafx.fxml;
+
 }
