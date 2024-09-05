@@ -50,12 +50,12 @@ public class UDPConnection extends Thread {
         while (true) {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
-                socket.receive(packet);
-                String receivedMessage = new String(packet.getData(), 0, packet.getLength());
+                this.socket.receive(packet);
+                String receivedMessage = new String(packet.getData(), 0, packet.getLength()).trim();
                 System.out.println("Mensaje recibido de " + packet.getAddress().getHostAddress() + ": " + receivedMessage);
             } catch (IOException e) {
                 e.printStackTrace();
-                break; // Termina el bucle si hay una excepción de E/S
+                break;
             }
         }
         socket.close();
