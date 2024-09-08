@@ -7,6 +7,9 @@ public class UDPConnection extends Thread {
 
     private DatagramSocket socket;
     private static UDPConnection instance;
+    private static DatagramPacket packet;
+    private static String receivedMessage;
+
     private int port;
 
 
@@ -16,6 +19,8 @@ public class UDPConnection extends Thread {
     public static synchronized UDPConnection getInstance() {
         if (instance == null) {
             instance = new UDPConnection();
+            packet= null;
+            receivedMessage= "";
         }
         return instance;
     }
@@ -48,10 +53,10 @@ public class UDPConnection extends Thread {
     public void run() {
         byte[] buffer = new byte[1024];
         while (true) {
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+            packet = new DatagramPacket(buffer, buffer.length);
             try {
                 this.socket.receive(packet);
-                String receivedMessage = new String(packet.getData(), 0, packet.getLength()).trim();
+                receivedMessage = new String(packet.getData(), 0, packet.getLength()).trim();
                 System.out.println("Mensaje recibido de " + packet.getAddress().getHostAddress() + ": " + receivedMessage);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -75,5 +80,12 @@ public class UDPConnection extends Thread {
         if (socket != null && !socket.isClosed()) {
             socket.close();
         }
+    }
+
+    public static DatagramPacket getPacket() {
+        return packet;
+    }
+    public static String getReceivedMessage() {
+        return receivedMessage;
     }
 }

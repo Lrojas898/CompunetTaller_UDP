@@ -13,9 +13,8 @@ public class PeerA extends Peer {
         this.connection.sendDatagram(message, destinationIp, destinationPort);
     }
 
-    public static void main(String[] args) throws UnknownHostException {
-        PeerA peerA = new PeerA(5001);
-        peerA.sendMessage("Hola desde PeerA", "192.168.0.14", 5002);
-        peerA.sendMessage("Hola desde PeerA", "192.168.0.16", 5003);
+    public String getReceivedMessage(){
+        return this.connection.getReceivedMessage();
     }
+
 }
