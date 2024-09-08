@@ -6,7 +6,7 @@ public class PeerA extends Peer {
 
     public PeerA(int port) throws UnknownHostException {
         super(port);
-        this.connection.start(); // Comienza a escuchar en la red
+         // Comienza a escuchar en la red
     }
 
     @Override
