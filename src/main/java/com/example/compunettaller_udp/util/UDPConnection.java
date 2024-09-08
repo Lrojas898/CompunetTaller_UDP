@@ -9,7 +9,6 @@ public class UDPConnection extends Thread {
     private static UDPConnection instance;
     private static DatagramPacket packet;
     private static String receivedMessage;
-
     private int port;
 
 
@@ -83,6 +82,7 @@ public class UDPConnection extends Thread {
             socket.close();
         }
     }
+
 
     public static DatagramPacket getPacket() {
         return packet;

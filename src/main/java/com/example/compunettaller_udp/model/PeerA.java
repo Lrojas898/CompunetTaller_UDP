@@ -6,7 +6,6 @@ public class PeerA extends Peer {
 
     public PeerA(int port) throws UnknownHostException {
         super(port);
-         // Comienza a escuchar en la red
     }
 
     @Override
@@ -15,7 +14,8 @@ public class PeerA extends Peer {
     }
 
     public String getReceivedMessage(){
-        return this.connection.getReceivedMessage();
+        return ipAddress + " : "+this.connection.getReceivedMessage();
     }
+
 
 }
