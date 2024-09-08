@@ -94,6 +94,8 @@ public class Controller implements Initializable {
     public void sentChat(){
         if (!(IpTF.getText().isEmpty() || portTF.getText().isEmpty() || message.getText().isEmpty())){
             peerA.sendMessage(message.getText(),IpTF.getText(),Integer.parseInt(portTF.getText()));
+            chatHistory += "Yo: " + message.getText() + "\n";
+            chat.setText(chatHistory);
         }
     }
 
