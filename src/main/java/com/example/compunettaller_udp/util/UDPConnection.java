@@ -19,6 +19,7 @@ public class UDPConnection extends Thread {
     public static synchronized UDPConnection getInstance() {
         if (instance == null) {
             instance = new UDPConnection();
+            System.out.println("Instancia creada:"+instance);
             packet= null;
             receivedMessage= "";
         }
