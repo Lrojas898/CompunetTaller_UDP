@@ -75,8 +75,8 @@ public class Controller implements Initializable {
             myIp.setText(ipMy);
             ServerSocket serverSocket = new ServerSocket(0);
             int port = serverSocket.getLocalPort();
-            peerA = new PeerA(port);
-            myPort.setText(String.valueOf(port));
+            peerA = new PeerA(7331);
+            myPort.setText(String.valueOf(7331));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
