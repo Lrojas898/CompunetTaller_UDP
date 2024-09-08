@@ -55,6 +55,7 @@ public class UDPConnection extends Thread {
         while (true) {
             packet = new DatagramPacket(buffer, buffer.length);
             try {
+                System.out.println("Esperando mensaje...");
                 this.socket.receive(packet);
                 receivedMessage = new String(packet.getData(), 0, packet.getLength()).trim();
                 System.out.println("Mensaje recibido de " + packet.getAddress().getHostAddress() + ": " + receivedMessage);

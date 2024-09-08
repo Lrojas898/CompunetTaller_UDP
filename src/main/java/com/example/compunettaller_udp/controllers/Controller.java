@@ -14,7 +14,7 @@ import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.io.IOException;
 import java.net.ServerSocket;
-import com.example.compunettaller_udp.model.PeerA;
+import com.example.compunettaller_udp.model.*;
 
 public class Controller implements Initializable {
 
@@ -57,7 +57,7 @@ public class Controller implements Initializable {
                     }
                 });
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -86,7 +86,7 @@ public class Controller implements Initializable {
 
 
     public void chatView(){
-        chatHistory += messegeNow + "\n";
+        chatHistory += "<--"+messegeNow + "\n";
         chat.setText(chatHistory);
         messegeDiferent = messegeNow;
     }
@@ -94,7 +94,7 @@ public class Controller implements Initializable {
     public void sentChat(){
         if (!(IpTF.getText().isEmpty() || portTF.getText().isEmpty() || message.getText().isEmpty())){
             peerA.sendMessage(message.getText(),IpTF.getText(),Integer.parseInt(portTF.getText()));
-            chatHistory += "Yo: " + message.getText() + "\n";
+            chatHistory += "--> Yo: " + message.getText() + "\n";
             chat.setText(chatHistory);
         }
     }
