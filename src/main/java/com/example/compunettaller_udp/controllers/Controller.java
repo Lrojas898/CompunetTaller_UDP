@@ -33,8 +33,7 @@ public class Controller {
         Platform.runLater(() -> {
             try {
                 // Inicializar PeerA con su puerto correspondiente
-                peerA = new PeerA(5001);
-
+                peerA = new PeerA(0);
                 // Actualizar la etiqueta de la IP y puerto para PeerA
                 myIp.setText(peerA.getLocalIpAddress());
                 myPort.setText(String.valueOf(peerA.getPort()));
