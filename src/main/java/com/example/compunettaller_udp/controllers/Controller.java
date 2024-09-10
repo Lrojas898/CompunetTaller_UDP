@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.util.Random;
+
 
 public class Controller {
 
@@ -32,8 +34,9 @@ public class Controller {
     public Controller() {
         Platform.runLater(() -> {
             try {
+                Random random = new Random();
                 // Inicializar PeerA con su puerto correspondiente
-                peerA = new PeerA(0);
+                peerA = new PeerA(random.nextInt(3000) + 3001);
                 // Actualizar la etiqueta de la IP y puerto para PeerA
                 myIp.setText(peerA.getLocalIpAddress());
                 myPort.setText(String.valueOf(peerA.getPort()));
