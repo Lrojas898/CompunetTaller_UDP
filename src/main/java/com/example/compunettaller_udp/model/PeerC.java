@@ -14,14 +14,11 @@ public class PeerC extends Peer {
     }
 
     public static void main(String[] args) throws UnknownHostException {
-        // Configuración para PeerC
-        PeerC peerC = new PeerC(5003); // Configura el puerto de recepción para PeerC
+        // Configura PeerC con un puerto
+        PeerC peerC = new PeerC(5003);
 
-        // Ejemplo de envío de mensajes a PeerA y PeerB
-        peerC.sendMessage("Hola desde PeerC a PeerA", "192.168.0.12", 5001);
-        peerC.sendMessage("Hola desde PeerC a PeerB", "192.168.0.14", 5002);
-
-        // Continuará recibiendo mensajes hasta que se detenga manualmente
+        // Ejemplo de envío de mensajes
+        peerC.sendMessage("Mensaje de PeerC a PeerA", "192.168.0.12", 5001);
+        peerC.sendMessage("Mensaje de PeerC a PeerB", "192.168.0.14", 5002);
     }
 }
-

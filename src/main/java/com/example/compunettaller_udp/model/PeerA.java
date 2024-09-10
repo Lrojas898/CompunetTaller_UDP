@@ -1,5 +1,4 @@
 package com.example.compunettaller_udp.model;
-
 import java.net.UnknownHostException;
 
 public class PeerA extends Peer {
@@ -13,9 +12,12 @@ public class PeerA extends Peer {
         this.connection.sendDatagram(message, destinationIp, destinationPort);
     }
 
-    public String getReceivedMessage(){
-        return ipAddress + " : "+this.connection.getReceivedMessage();
+    public static void main(String[] args) throws UnknownHostException {
+        // Configura PeerA con un puerto
+        PeerA peerA = new PeerA(5001);
+
+        // Ejemplo de envío de mensajes
+        peerA.sendMessage("Mensaje de PeerA a PeerB", "192.168.0.14", 5002);
+        peerA.sendMessage("Mensaje de PeerA a PeerC", "192.168.0.16", 5003);
     }
-
-
 }

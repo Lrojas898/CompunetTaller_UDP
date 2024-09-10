@@ -1,106 +1,71 @@
 package com.example.compunettaller_udp.controllers;
-
+import com.example.compunettaller_udp.model.*;
+import com.example.compunettaller_udp.util.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.ResourceBundle;
-import java.io.IOException;
-import java.net.ServerSocket;
-import com.example.compunettaller_udp.model.*;
 
-public class Controller implements Initializable {
-
-    PeerA peerA;
-    @FXML
-    protected Button sendBt;
+public class Controller {
 
     @FXML
-    protected TextField IpTF;
-
+    private Button sendBt;
     @FXML
-    protected TextField portTF;
-
+    private TextArea chat;
     @FXML
-    protected TextArea message;
-
+    private TextField IpTF;
     @FXML
-    protected TextArea chat;
-
-    private String chatHistory = "";
-    private String messegeNow = "";
-    private String messegeDiferent = "";
-
+    private TextField portTF;
     @FXML
-    protected Label myIp;
-
+    private TextArea message;
     @FXML
-    protected Label myPort;
+    private Label myIp;
+    @FXML
+    private Label myPort;
 
+    private PeerA peerA;
+    // Si deseas usar PeerB o PeerC, puedes instanciarlos también
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        init();
-        new Thread(() -> {
-            while (true) {
-                Platform.runLater(() -> {
-                    messegeNow = peerA.getReceivedMessage();
-                    if (!messegeNow.equals(messegeDiferent)) {
-                        chatView();
+    public Controller() {
+        Platform.runLater(() -> {
+            try {
+                // Inicializar PeerA con su puerto correspondiente
+                peerA = new PeerA(5001);
+
+                // Actualizar la etiqueta de la IP y puerto para PeerA
+                myIp.setText(peerA.getLocalIpAddress());
+                myPort.setText(String.valueOf(peerA.getPort()));
+
+                // Iniciar un hilo para escuchar mensajes
+                new Thread(() -> {
+                    while (true) {
+                        String receivedMessage = peerA.getConnection().receive();
+                        Platform.runLater(() -> chat.appendText("Received: " + receivedMessage + "\n"));
                     }
-                });
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                }).start();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }).start();
+        });
     }
 
-    private void init() {
-        String ipMy="";
-        myIp.setText(ipMy);
-        myPort.setText("");
-        try {
-            InetAddress ip = InetAddress.getLocalHost();
-            ipMy = ip.getHostAddress();
-            myIp.setText(ipMy);
-            ServerSocket serverSocket = new ServerSocket(0);
-            int port = serverSocket.getLocalPort();
-            peerA = new PeerA(7331);
-            myPort.setText(String.valueOf(7331));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    public void sentChat() {
+        String ip = IpTF.getText();
+        int port = Integer.parseInt(portTF.getText());
+        String msg = message.getText();
+
+        // Enviar mensaje usando PeerA
+        peerA.sendMessage(msg, ip, port);
+
+        // Mostrar el mensaje enviado en la interfaz
+        chat.appendText("Sent: " + msg + "\n");
+
+        // Limpiar los campos de entrada
+        message.clear();
     }
-
-
-    public void chatView(){
-        chatHistory += "<--"+messegeNow + "\n";
-        chat.setText(chatHistory);
-        messegeDiferent = messegeNow;
-    }
-
-    public void sentChat(){
-        if (!(IpTF.getText().isEmpty() || portTF.getText().isEmpty() || message.getText().isEmpty())){
-            peerA.sendMessage(message.getText(),IpTF.getText(),Integer.parseInt(portTF.getText()));
-            chatHistory += "--> Yo: " + message.getText() + "\n";
-            chat.setText(chatHistory);
-        }
-    }
-
-
-
 }
-
-

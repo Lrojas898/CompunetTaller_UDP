@@ -13,7 +13,12 @@ public class PeerB extends Peer {
         this.connection.sendDatagram(message, destinationIp, destinationPort);
     }
 
-    public String getReceivedMessage(){
-        return this.connection.getReceivedMessage();
+    public static void main(String[] args) throws UnknownHostException {
+        // Configura PeerB con un puerto
+        PeerB peerB = new PeerB(5002);
+
+        // Ejemplo de envío de mensajes
+        peerB.sendMessage("Mensaje de PeerB a PeerA", "192.168.0.12", 5001);
+        peerB.sendMessage("Mensaje de PeerB a PeerC", "192.168.0.16", 5003);
     }
 }
